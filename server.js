@@ -53,7 +53,7 @@ const cfg = {
     headers: env.CUSTOM_API_HEADERS || '',
     body: env.CUSTOM_API_BODY || '',
     video: env.CUSTOM_VIDEO_PATH || '',
-    thumb: env.CUSTOM_THUMB_PATH || '',
+    thumb: env.CUSTOM_THUMB_PATH || '',a
     title: env.CUSTOM_TITLE_PATH || '',
   },
   contactFile: env.CONTACT_FILE || path.join(__dirname, 'data', 'messages.jsonl'),
@@ -442,7 +442,7 @@ server.requestTimeout = 0; // allow long video streams
 server.headersTimeout = 30000;
 
 if (require.main === module) {
-   server.listen(cfg.port, '0.0.0.0', () => {
+   server.listen(process.env.PORT || 10000, '0.0.0.0', () => {
     
     const ps = activeProviders().map((p) => p.name);
     console.log(`Insta Downloader running on http://localhost:${cfg.port}`);
