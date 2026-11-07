@@ -53,7 +53,7 @@ const cfg = {
     headers: env.CUSTOM_API_HEADERS || '',
     body: env.CUSTOM_API_BODY || '',
     video: env.CUSTOM_VIDEO_PATH || '',
-    thumb: env.CUSTOM_THUMB_PATH || '',a
+    thumb: env.CUSTOM_THUMB_PATH || '',
     title: env.CUSTOM_TITLE_PATH || '',
   },
   contactFile: env.CONTACT_FILE || path.join(__dirname, 'data', 'messages.jsonl'),
