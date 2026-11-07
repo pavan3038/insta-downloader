@@ -442,7 +442,8 @@ server.requestTimeout = 0; // allow long video streams
 server.headersTimeout = 30000;
 
 if (require.main === module) {
-  server.listen(cfg.port, cfg.host, () => {
+  server.listen(Number(process.env.PORT) || 10000, '0.0.0.0', () => {
+    
     const ps = activeProviders().map((p) => p.name);
     console.log(`Insta Downloader running on http://localhost:${cfg.port}`);
     console.log(ps.length ? `Active providers: ${ps.join(', ')}` : 'WARNING: no API provider configured – downloads will show a "not configured" message. See .env.example');
