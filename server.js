@@ -443,12 +443,7 @@ if (require.main === module) {
   const PORT = parseInt(process.env.PORT, 10) || 10000;
   server.listen(PORT, '0.0.0.0', () => {
     const ps = activeProviders().map(p => p.name);
-    console.log(`Insta Downloader running on port ${PORT}`);
-
-    console.log(ps.length ? `Active providers: ${ps.join(', ')}` : 'WARNING: no API provider configured - downloads will fail');
-  });
-}
-
+    console.log(`Insta Downloader running on port ${PORT}`)
      
     console.log(ps.length ? `Active providers: ${ps.join(', ')}` : 'WARNING: no API provider configured – downloads will show a "not configured" message. See .env.example');
   });
