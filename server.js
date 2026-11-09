@@ -439,13 +439,16 @@ const server = http.createServer(async (req, res) => {
     sendJson(res, 500, { error: 'Internal server error', code: 'INTERNAL' });
   }
 });
-server.requestTimeout = 0; // allow long video streams
-server.headersTimeout = 30000;
-
 if (require.main === module) {
-   server.listen(process.env.PORT || 10000, '0.0.0.0', () => {
-    const ps = activeProviders().map((p) => p.name);
-     console.log(`Insta Downloader running on http://0.0.0.0:${cfg.port}`);
+  const PORT = parseInt(process.env.PORT, 10) || 10000;
+  server.listen(PORT, '0.0.0.0', () => {
+    const ps = activeProviders().map(p => p.name);
+    console.log(`Insta Downloader running on port ${PORT}`);
+
+    console.log(ps.length ? `Active providers: ${ps.join(', ')}` : 'WARNING: no API provider configured - downloads will fail');
+  });
+}
+
      
     console.log(ps.length ? `Active providers: ${ps.join(', ')}` : 'WARNING: no API provider configured – downloads will show a "not configured" message. See .env.example');
   });
