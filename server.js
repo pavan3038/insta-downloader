@@ -125,8 +125,8 @@ async function safeFetch(url, init = {}, { timeout = 20000, maxRedirects = 3 } =
 
 async function jsonFetch(url, init = {}) {
   let res;
-  try { res = await fetch(url, { ...init, signal: AbortSignal.timeout(15000) }); }
-  catch { throw new ApiError(502, 'UPSTREAM', 'API service unreachable'); }
+  try { res = await fetch(url, { ...init, signal: AbortSignal.timeout(45000) }); }
+  catch(e) { console.error("[CUSTOM FETCH ERR]:", e.message); throw new ApiError(502, "UPSTREAM", "API service unreachable: " + e.message); }
   let data = null;
   try { data = await res.json(); } catch { /* not JSON */ }
   if (!res.ok) {
