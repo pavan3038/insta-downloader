@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Insta Downloader – Download Instagram Reels in MP4 (Authorized Content)</title>
+<meta name="description" content="Insta Downloader lets you download Instagram Reels and videos you own or have permission to save, as MP4 in original quality. Fast, free, English &amp; Hindi.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="%SITE_URL%/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#8134af">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Insta Downloader – Instagram Reel Downloader (MP4)">
+<meta property="og:description" content="Download Instagram Reels you own or are allowed to save, in MP4 and original quality.">
+<meta property="og:url" content="%SITE_URL%/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme-init.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Insta Downloader","url":"%SITE_URL%/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Which Instagram videos can I download?","acceptedAnswer":{"@type":"Answer","text":"Videos from your own connected Instagram account and videos whose owners have given permission to download them, where an authorized API makes them available."}},
+{"@type":"Question","name":"Is Insta Downloader free?","acceptedAnswer":{"@type":"Answer","text":"Yes, the website is free to use."}},
+{"@type":"Question","name":"Where is the video saved?","acceptedAnswer":{"@type":"Answer","text":"On Android and desktop the MP4 goes to your Downloads folder. On iPhone use the Save Video button."}}]}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="/" aria-label="Insta Downloader">
+      <span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
+      Insta Downloader
+    </a>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="/#home" data-i18n="nav_home">Home</a>
+      <a href="/#how" data-i18n="nav_how">How to</a>
+      <a href="/#history" data-i18n="nav_history">History</a>
+      <a href="/#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="/contact" data-i18n="nav_contact">Contact</a>
+      <span class="nav-tools">
+        <button class="icon-btn" id="langBtn" aria-label="Language">हिंदी</button>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container">
+    <span class="badge" data-i18n="badge">Only for videos you own or have permission to download</span>
+    <h1><span data-i18n="h1a">Download Instagram Reels</span> <span class="grad-text" data-i18n="h1b">in MP4</span></h1>
+    <p class="sub" data-i18n="sub">Paste a Reel link, preview the video and save it in original quality. Fast, free and works on phone and computer.</p>
+
+    <div class="dl-box">
+      <form class="dl-form" id="dlForm" novalidate>
+        <div class="input-wrap">
+          <label class="sr" for="urlInput" data-i18n="label_url">Instagram Reel link</label>
+          <input id="urlInput" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://www.instagram.com/reel/…" data-i18n-ph="ph_url">
+          <button type="button" class="paste-btn" id="pasteBtn" data-i18n="paste">Paste</button>
+        </div>
+        <button class="btn" id="goBtn" type="submit"><span id="goTxt" data-i18n="download">Download</span></button>
+      </form>
+      <p class="hint" data-i18n="hint">Example: https://www.instagram.com/reel/ABC123xyz/</p>
+      <div id="msg" class="msg" role="status" aria-live="polite" hidden></div>
+
+      <div class="result" id="result" hidden>
+        <video id="preview" controls playsinline preload="metadata"></video>
+        <div>
+          <p class="r-title" id="rTitle"></p>
+          <p class="r-meta" id="rMeta"></p>
+          <div class="r-actions">
+            <button class="btn sm" id="dlBtn" type="button">⬇ <span data-i18n="dl_mp4">Download MP4</span></button>
+            <button class="btn sm sec" id="saveBtn" type="button" hidden>📲 <span data-i18n="save_video">Save Video</span></button>
+            <button class="btn sm sec" id="copyBtn" type="button">🔗 <span data-i18n="copy_link">Copy Link</span></button>
+          </div>
+          <div class="progress" id="progress" hidden>
+            <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap"><i id="barFill"></i></div>
+            <div class="p-text"><span id="pText"></span><span id="pPct">0%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="feat">
+  <div class="container">
+    <h2 id="feat" data-i18n="feat_h">Why Insta Downloader?</h2>
+    <p class="lead" data-i18n="feat_p">Simple, quick and respectful of creators.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🎬</div><h3 data-i18n="f1h">Original quality</h3><p data-i18n="f1p">We keep the highest quality MP4 the source provides — no re-encoding.</p></div>
+      <div class="card"><div class="ico">📱</div><h3 data-i18n="f2h">Android &amp; iPhone</h3><p data-i18n="f2p">Saved to Downloads on Android. On iPhone use Save Video to put it in Photos or Files.</p></div>
+      <div class="card"><div class="ico">⚡</div><h3 data-i18n="f3h">Fast &amp; light</h3><p data-i18n="f3p">No heavy scripts or trackers. Live progress while your video downloads.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3 data-i18n="f4h">Private &amp; secure</h3><p data-i18n="f4p">History stays in your own browser. We never ask for your Instagram password.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" aria-labelledby="howh">
+  <div class="container">
+    <h2 id="howh" data-i18n="how_h">How to Download</h2>
+    <p class="lead" data-i18n="how_p">Four easy steps.</p>
+    <div class="grid">
+      <div class="card"><div class="step-n">1</div><h3 data-i18n="s1h">Copy the link</h3><p data-i18n="s1p">In Instagram open the Reel, tap Share and choose Copy link.</p></div>
+      <div class="card"><div class="step-n">2</div><h3 data-i18n="s2h">Paste it here</h3><p data-i18n="s2p">Paste the link in the box above, or tap the Paste button.</p></div>
+      <div class="card"><div class="step-n">3</div><h3 data-i18n="s3h">Preview</h3><p data-i18n="s3p">Press Download. We check the link and show a preview of the video.</p></div>
+      <div class="card"><div class="step-n">4</div><h3 data-i18n="s4h">Save MP4</h3><p data-i18n="s4p">Tap Download MP4. On iPhone tap Save Video and choose Save Video / Save to Files.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" aria-labelledby="supp">
+  <div class="container">
+    <h2 id="supp" data-i18n="sup_h">Supported Content</h2>
+    <p class="lead" data-i18n="sup_p">We only support content you are allowed to download.</p>
+    <div class="grid">
+      <div class="card"><h3>✅ <span data-i18n="sup1h">Public Reels</span></h3><p data-i18n="sup1p">Where an authorized source makes them available.</p></div>
+      <div class="card"><h3>✅ <span data-i18n="sup2h">Your own videos</span></h3><p data-i18n="sup2p">Reels and videos from your connected Instagram account.</p></div>
+      <div class="card"><h3>✅ <span data-i18n="sup3h">Permitted videos</span></h3><p data-i18n="sup3p">Videos whose owner allows downloading.</p></div>
+      <div class="card"><h3>🚫 <span data-i18n="sup4h">Not supported</span></h3><p data-i18n="sup4p">Private accounts, Stories of others and content without permission.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="history" aria-labelledby="histh">
+  <div class="container">
+    <div class="history-head">
+      <h2 id="histh" data-i18n="hist_h">Download History</h2>
+      <button class="btn sm sec" id="clearBtn" type="button" data-i18n="clear_hist">Clear History</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+</section>
+
+<section class="alt" id="faq" aria-labelledby="faqh">
+  <div class="container">
+    <h2 id="faqh" data-i18n="faq_h">Frequently Asked Questions</h2>
+    <p class="lead" data-i18n="faq_p">Quick answers to common questions.</p>
+    <details><summary><span class="l-en">Which Instagram videos can I download?</span><span class="l-hi">कौन से Instagram वीडियो डाउनलोड हो सकते हैं?</span></summary>
+      <p><span class="l-en">Videos from your own connected account, public Reels where an authorized source makes them available, and videos whose owners permit downloading.</span><span class="l-hi">आपके अपने कनेक्टेड अकाउंट के वीडियो, पब्लिक Reels (जहाँ अधिकृत स्रोत उपलब्ध कराए) और वे वीडियो जिन्हें डाउनलोड करने की अनुमति है।</span></p></details>
+    <details><summary><span class="l-en">Is it free?</span><span class="l-hi">क्या यह फ्री है?</span></summary>
+      <p><span class="l-en">Yes, using the website is free.</span><span class="l-hi">हाँ, वेबसाइट का उपयोग मुफ़्त है।</span></p></details>
+    <details><summary><span class="l-en">Where is the video saved?</span><span class="l-hi">वीडियो कहाँ सेव होता है?</span></summary>
+      <p><span class="l-en">On Android and desktop the MP4 is saved in your Downloads folder. On iPhone tap Save Video and choose Save Video (Photos) or Save to Files.</span><span class="l-hi">Android और कंप्यूटर में MP4 आपके Downloads फोल्डर में सेव होता है। iPhone में Save Video दबाकर "Save Video" (Photos) या "Save to Files" चुनें।</span></p></details>
+    <details><summary><span class="l-en">Why do I see "not available"?</span><span class="l-hi">"उपलब्ध नहीं" का मैसेज क्यों दिखता है?</span></summary>
+      <p><span class="l-en">The video may be private, deleted, not yours, or the owner hasn't allowed downloads. The site may also not be connected to an Instagram API yet.</span><span class="l-hi">वीडियो प्राइवेट, डिलीट, आपका न होना या डाउनलोड की अनुमति न होना कारण हो सकता है। साथ ही साइट पर अभी Instagram API जुड़ी न हो।</span></p></details>
+    <details><summary><span class="l-en">Is the original quality kept?</span><span class="l-hi">क्या ओरिजिनल क्वालिटी मिलती है?</span></summary>
+      <p><span class="l-en">Yes. We pass through the exact file the source provides without re-encoding.</span><span class="l-hi">हाँ। स्रोत जो फ़ाइल देता है, हम उसे बिना बदलाव (re-encode) के ही देते हैं।</span></p></details>
+    <details><summary><span class="l-en">Do you store my videos?</span><span class="l-hi">क्या आप मेरे वीडियो स्टोर करते हैं?</span></summary>
+      <p><span class="l-en">No. Videos stream directly to your device. History is saved only in your browser.</span><span class="l-hi">नहीं। वीडियो सीधे आपके डिवाइस पर आता है। हिस्ट्री केवल आपके ब्राउज़र में रहती है।</span></p></details>
+  </div>
+</section>
+
+<section aria-label="Disclaimer">
+  <div class="container"><p class="notice" data-i18n="disclaimer">Insta Downloader is not affiliated with Instagram or Meta. Please respect creators' copyrights — download only content you own or have permission to save.</p></div>
+</section>
+</main>
+
+<footer>
+  <div class="container f-row">
+    <div>© <span id="yr"></span> Insta Downloader</div>
+    <div class="f-links">
+      <a href="/privacy" data-i18n="privacy">Privacy Policy</a>
+      <a href="/terms" data-i18n="terms">Terms &amp; Conditions</a>
+      <a href="/contact" data-i18n="nav_contact">Contact</a>
+    </div>
+  </div>
+</footer>
+<div id="toast" class="toast" hidden></div>
+<script src="/assets/app.js" defer></script>
+</body>
+</html>

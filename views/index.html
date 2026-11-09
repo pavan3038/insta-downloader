@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Insta Downloader – Instagram Reel &amp; Video Downloader (MP4)</title>
+<meta name="description" content="Insta Downloader: paste an Instagram Reel link and save the MP4 video in original quality — only for content you own or are allowed to download. Hindi &amp; English. | इंस्टाग्राम रील MP4 डाउनलोडर।">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="__SITE_URL__/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#6d28d9">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Insta Downloader">
+<meta property="og:title" content="Insta Downloader – Instagram Reel &amp; Video Downloader">
+<meta property="og:description" content="Save Instagram Reels as MP4 in original quality (for content you own or are authorised to download).">
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="hi" href="__SITE_URL__/">
+<link rel="alternate" hreflang="en" href="__SITE_URL__/">
+<script src="/assets/boot.js"></script>
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","name":"Insta Downloader","url":"__SITE_URL__/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","inLanguage":["hi","en"],"description":"Download Instagram Reels as MP4 for content you own or are authorised to save."},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Which Instagram videos can I download?","acceptedAnswer":{"@type":"Answer","text":"Videos from your own connected account, and public Reels where an authorised source makes the file available to you. Always make sure you own the content or have permission."}},
+{"@type":"Question","name":"Can I download videos from private accounts?","acceptedAnswer":{"@type":"Answer","text":"No. Private content is never accessed."}},
+{"@type":"Question","name":"Where is the video saved?","acceptedAnswer":{"@type":"Answer","text":"On Android it goes to your Downloads folder. On iPhone it is saved to Files > Downloads, and you can use Save to Photos (Share > Save Video). On a computer it goes to the browser's download folder."}},
+{"@type":"Question","name":"Is the video quality reduced?","acceptedAnswer":{"@type":"Answer","text":"No. The MP4 file is passed through without re-encoding, so you get the original quality that the source provides."}}
+]}]}
+</script>
+</head>
+<body data-page="home">
+<!--@header-->
+<main id="main">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <span class="badge"><i></i><span data-i18n="hero.badge">Fast · Simple · MP4</span></span>
+      <h1 id="h1"><span data-i18n="hero.t1">Instagram Reel</span> <em data-i18n="hero.t2">Downloader</em></h1>
+      <p class="lead" data-i18n="hero.sub">Paste the Reel link, preview it and save the MP4 in original quality — for videos you own or are allowed to download.</p>
+
+      <form id="dl-form" class="card form-card" novalidate autocomplete="off">
+        <div class="field">
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+            <input id="url" name="url" type="url" inputmode="url" autocapitalize="off" spellcheck="false" required
+                   data-i18n-placeholder="form.placeholder" placeholder="https://www.instagram.com/reel/..." data-i18n-aria="form.label" aria-label="Instagram link" aria-describedby="url-msg">
+            <button class="mini" type="button" id="paste-btn" data-i18n="form.paste">Paste</button>
+          </div>
+          <button class="btn" type="submit" id="go-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg><span data-i18n="form.submit">Download</span></button>
+        </div>
+        <p class="hint" id="url-msg" data-i18n="form.note">Only download content you own or have permission to save.</p>
+      </form>
+
+      <div class="alert warn" id="api-notice" role="status" hidden><div><strong data-i18n="status.title">API not configured</strong><span data-i18n="status.body"></span></div></div>
+      <div class="alert err" id="error-box" role="alert" hidden><div><strong id="error-title"></strong><span id="error-text"></span></div></div>
+
+      <div class="card result" id="result" hidden aria-live="polite">
+        <div class="preview"><video id="preview" controls playsinline preload="metadata"></video></div>
+        <div class="info">
+          <h2 id="r-title"></h2>
+          <ul class="meta"><li id="r-type"></li><li>MP4</li><li data-i18n="result.quality">Original quality</li></ul>
+          <div class="actions">
+            <button class="btn" id="dl-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg><span data-i18n="btn.download">Download MP4</span></button>
+            <button class="btn ghost sm" id="cancel-btn" type="button" hidden data-i18n="btn.cancel">Cancel</button>
+            <button class="btn ghost sm" id="share-btn" type="button" hidden data-i18n="btn.save">Save to Photos</button>
+            <button class="btn ghost sm" id="copy-btn" type="button" data-i18n="btn.copy">Copy link</button>
+            <button class="btn ghost sm" id="new-btn" type="button" data-i18n="btn.new">New video</button>
+          </div>
+          <div class="progress" id="progress" hidden>
+            <div class="progress-top"><span id="p-label" data-i18n="progress.downloading">Downloading…</span><span id="p-num">0%</span></div>
+            <div class="track" id="p-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-i18n-aria="progress.aria" aria-label="Download progress"><div id="p-bar"></div></div>
+          </div>
+          <div class="alert ok success" id="success" role="status" hidden><div><strong data-i18n="success.title">Download complete!</strong><span id="success-text"></span></div></div>
+        </div>
+      </div>
+
+      <ul class="chips">
+        <li data-i18n="chip.1">MP4 video</li>
+        <li data-i18n="chip.2">Original quality</li>
+        <li data-i18n="chip.3">No login needed</li>
+        <li data-i18n="chip.4">Android · iPhone · PC</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="features" class="alt" aria-labelledby="f-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="f-h" data-i18n="feat.h">Why Insta Downloader?</h2><p data-i18n="feat.p">Clean, fast and built around authorised sources.</p></div>
+      <div class="grid">
+        <article class="card feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg></div><h3 data-i18n="feat.1h">Fast</h3><p data-i18n="feat.1p">Lightweight pages and direct streaming — no heavy scripts.</p></article>
+        <article class="card feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></div><h3 data-i18n="feat.2h">Preview first</h3><p data-i18n="feat.2p">Watch the video before you save it.</p></article>
+        <article class="card feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 data-i18n="feat.3h">Authorised &amp; safe</h3><p data-i18n="feat.3p">Official API support. Keys stay on the server, never in your browser.</p></article>
+        <article class="card feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3 data-i18n="feat.4h">Every device</h3><p data-i18n="feat.4p">Android, iPhone and desktop, in light or dark mode.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="how-h" data-i18n="how.h">How to download</h2><p data-i18n="how.p">Three simple steps.</p></div>
+      <ol class="steps">
+        <li class="card"><h3 data-i18n="how.1h">Copy the link</h3><p data-i18n="how.1p">In Instagram open the Reel, tap Share → Copy link.</p></li>
+        <li class="card"><h3 data-i18n="how.2h">Paste &amp; check</h3><p data-i18n="how.2p">Paste it above and press Download. The link is verified and a preview appears.</p></li>
+        <li class="card"><h3 data-i18n="how.3h">Save the MP4</h3><p data-i18n="how.3p">Press Download MP4. Android: Downloads folder. iPhone: Files, or Save to Photos.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="alt" aria-labelledby="sup-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="sup-h" data-i18n="sup.h">Supported content</h2></div>
+      <div class="two">
+        <div class="card"><h3 data-i18n="sup.okh">✅ Supported</h3><ul>
+          <li data-i18n="sup.ok1">Public Reels, where an authorised source makes them available</li>
+          <li data-i18n="sup.ok2">Videos from your own (connected) account</li>
+          <li data-i18n="sup.ok3">Videos you have permission to download</li></ul></div>
+        <div class="card"><h3 data-i18n="sup.noh">⛔ Not supported</h3><ul>
+          <li data-i18n="sup.no1">Private accounts or private content</li>
+          <li data-i18n="sup.no2">Content you have no right to copy or re-post</li>
+          <li data-i18n="sup.no3">Anything that needs your Instagram password</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="history" aria-labelledby="hist-h">
+    <div class="wrap">
+      <div class="hist-head">
+        <h2 id="hist-h" data-i18n="hist.h">Download history</h2>
+        <button class="btn sm danger" id="clear-hist" type="button" data-i18n="hist.clear">Clear history</button>
+      </div>
+      <ul class="hist" id="hist-list"></ul>
+      <p class="empty card" id="hist-empty" data-i18n="hist.empty">No downloads yet. History is saved only in this browser.</p>
+    </div>
+  </section>
+
+  <section id="faq" class="alt" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="faq-h" data-i18n="faq.h">Frequently asked questions</h2></div>
+      <div class="faq">
+        <details class="card"><summary><span lang="hi">कौन-से Instagram वीडियो डाउनलोड हो सकते हैं?</span><span lang="en">Which Instagram videos can I download?</span></summary>
+          <div class="ans"><span lang="hi">आपके अपने (कनेक्टेड) अकाउंट के वीडियो, और ऐसे Public Reels जिनकी फ़ाइल किसी अधिकृत स्रोत से उपलब्ध हो। कृपया सिर्फ़ वही कंटेंट सेव करें जो आपका हो या जिसकी आपको अनुमति हो।</span><span lang="en">Videos from your own connected account, and public Reels where an authorised source makes the file available. Please save only content you own or have permission for.</span></div></details>
+        <details class="card"><summary><span lang="hi">क्या Private अकाउंट के वीडियो डाउनलोड होंगे?</span><span lang="en">Can I download from private accounts?</span></summary>
+          <div class="ans"><span lang="hi">नहीं। Private कंटेंट तक कभी एक्सेस नहीं किया जाता।</span><span lang="en">No. Private content is never accessed.</span></div></details>
+        <details class="card"><summary><span lang="hi">वीडियो कहाँ सेव होगा?</span><span lang="en">Where is the video saved?</span></summary>
+          <div class="ans"><span lang="hi">Android में ब्राउज़र का Downloads फ़ोल्डर। iPhone में Files → Downloads, और "Save to Photos" दबाकर Share → Save Video से गैलरी में। कंप्यूटर पर ब्राउज़र का डाउनलोड फ़ोल्डर।</span><span lang="en">Android: your browser's Downloads folder. iPhone: Files → Downloads, or tap "Save to Photos" and choose Share → Save Video. Computer: the browser's download folder.</span></div></details>
+        <details class="card"><summary><span lang="hi">क्या क्वालिटी कम हो जाती है?</span><span lang="en">Is the quality reduced?</span></summary>
+          <div class="ans"><span lang="hi">नहीं। MP4 फ़ाइल बिना re-encode किए सीधे दी जाती है, इसलिए स्रोत जितनी original क्वालिटी देता है वही मिलती है।</span><span lang="en">No. The MP4 is passed through without re-encoding, so you get the original quality the source provides.</span></div></details>
+        <details class="card"><summary><span lang="hi">"API कॉन्फ़िगर नहीं है" का क्या मतलब है?</span><span lang="en">What does "API not configured" mean?</span></summary>
+          <div class="ans"><span lang="hi">यह वेबसाइट सिर्फ़ अधिकृत API से काम करती है। साइट के एडमिन ने अभी API Key/Token सेट नहीं किया है। (एडमिन: README और .env.example देखें।)</span><span lang="en">This site only works through authorised APIs and the admin has not set the API key/token yet. (Admins: see README and .env.example.)</span></div></details>
+        <details class="card"><summary><span lang="hi">मेरा वीडियो "अकाउंट का नहीं है" क्यों दिखा?</span><span lang="en">Why does my video say "not from the connected account"?</span></summary>
+          <div class="ans"><span lang="hi">आधिकारिक Instagram API सिर्फ़ उसी अकाउंट के वीडियो देती है जिसका टोकन जुड़ा हो। किसी और अकाउंट का Reel तभी मिलेगा जब एडमिन ने कोई अधिकृत दूसरा स्रोत जोड़ा हो।</span><span lang="en">The official Instagram API only returns videos of the account whose token is connected. Other accounts' Reels work only if the admin has added another authorised source.</span></div></details>
+        <details class="card"><summary><span lang="hi">क्या मेरी हिस्ट्री कहीं भेजी जाती है?</span><span lang="en">Is my history uploaded anywhere?</span></summary>
+          <div class="ans"><span lang="hi">नहीं। हिस्ट्री सिर्फ़ आपके ब्राउज़र में रहती है और "Clear History" से मिट जाती है।</span><span lang="en">No. History stays in your browser only and is removed with "Clear history".</span></div></details>
+      </div>
+    </div>
+  </section>
+</main>
+<!--@footer-->
+<script src="/assets/common.js" defer></script>
+<script src="/assets/app.js" defer></script>
+</body>
+</html>
