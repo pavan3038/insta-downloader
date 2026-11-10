@@ -168,7 +168,21 @@
     rTitle.textContent = current.title || t('result.untitled');
     rType.textContent = t('type.' + current.type);
     if (j.thumbnail) preview.setAttribute('poster', j.thumbnail);
+    
+    var isImg = (j.filename && !j.filename.endsWith(".mp4")) || (j.type === "image") || (j.stream && (j.stream.includes(".jpg") || j.stream.includes(".webp") || j.stream.includes(".png")));
+    if (dlBtn) {
+      var span = dlBtn.querySelector("span");
+      if (span) {
+        span.textContent = isImg ? "Download Photo (JPG)" : "Download MP4";
+      } else {
+        dlBtn.textContent = isImg ? "Download Photo (JPG)" : "Download MP4";
+      }
+    }
+    if (rType) {
+      rType.textContent = isImg ? "Photo" : "Video";
+    }
     preview.src = j.stream;
+
     result.hidden = false; progress.hidden = true; success.hidden = true; shareBtn.hidden = true;
     dlBtn.disabled = false; cancelBtn.hidden = true;
     result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
