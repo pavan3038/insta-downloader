@@ -1,4 +1,17 @@
 
+const rateLimit = require("express-rate-limit");
+
+const apiLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 10,
+  message: { ok: false, error: "Too many requests. Please wait 1 minute before trying again." },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+app.use("/api/", apiLimiter);
+
+
     'use strict';
 /**
  * Insta Downloader – zero-dependency Node.js server (Node 18+).
