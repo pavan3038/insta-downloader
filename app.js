@@ -197,11 +197,11 @@ function showResult(j, p) {
 
 }
 
-function () {
-    if (current) { rType.textContent = t('type.' + current.type); if (!current.title) rTitle.textContent = t('result.untitled'); }
-    renderError(); renderHist(); syncPasteLabel();
-    if (!success.hidden) successText.textContent = successMsg();
-  });
+function updateDynamicText() {
+    if (window.cur) {
+      if (rType) rType.textContent = (window.cur.type === "image" ? "Photo" : "Video");
+    }
+  }
 
   newBtn.addEventListener('click', function () {
     resetResult(); clearError(); input.value = ''; syncPasteLabel(); window.scrollTo({ top: 0, behavior: 'smooth' }); input.focus();
