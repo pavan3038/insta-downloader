@@ -331,12 +331,12 @@ async function handleMedia(req, res, id, kind) {
     if (!ct.startsWith('image/')) { controller.abort(); throw new ApiError(502, 'UPSTREAM', 'Bad thumbnail'); }
   } else {
     if (ct.startsWith('text/') || ct.includes('json') || ct.includes('html')) { controller.abort(); throw new ApiError(502, 'UPSTREAM', 'Media host did not return a video'); }
-    if (!ct.startsWith('video/')) ct = 'video/mp4';
+    if (!ct.startsWith('video/') && !ct.startsWith('image/')) ct = 'video/mp4';
     out['Accept-Ranges'] = 'bytes';
   }
   out['Content-Type'] = ct;
   for (const h of ['content-length', 'content-range']) { const v = r.headers.get(h); if (v) out[h] = v; }
-  if (kind === 'download') out['Content-Disposition'] = `attachment; filename="${e.filename}"; filename*=UTF-8''${encodeURIComponent(e.filename)}`;
+  if (kind === 'download') out['Content-Disposition'] = `attachment; filename="${ct.startsWith('image/') ? e.filename.replace(/\.mp4$/i, '.jpg') : e.filename}"; filename*=UTF-8''${encodeURIComponent(e.filename)}`;
 
   res.writeHead(r.status, out);
   if (req.method === 'HEAD') { controller.abort(); return res.end(); }
