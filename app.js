@@ -163,6 +163,29 @@
   });
 
   function showResult(j, p) {
+    var vEl = document.getElementById("preview");
+    var iEl = document.getElementById("img-preview");
+    var isPhoto = (j.type === "image") || (j.filename && j.filename.toLowerCase().includes(".jpg"));
+
+    if (isPhoto) {
+      if (vEl) { vEl.style.display = "none"; vEl.pause(); }
+      if (iEl) { iEl.src = j.stream || j.thumbnail; iEl.style.display = "block"; }
+      if (dlBtn) {
+        var sp = dlBtn.querySelector("span");
+        if (sp) { sp.removeAttribute("data-i18n"); sp.textContent = "Download Photo (JPG)"; }
+        else dlBtn.textContent = "Download Photo (JPG)";
+      }
+      var metaItem = document.querySelector(".meta li:nth-child(2)");
+      if (metaItem) metaItem.textContent = "JPG";
+    } else {
+      if (iEl) iEl.style.display = "none";
+      if (vEl) { vEl.style.display = "block"; vEl.src = j.stream; }
+      if (dlBtn) {
+        var sp2 = dlBtn.querySelector("span");
+        if (sp2) sp2.textContent = "Download MP4";
+      }
+    }
+
     var isImg = j.type === "image" || (j.filename && !j.filename.endsWith(".mp4"));
     
     // Fix preview container: video vs image
