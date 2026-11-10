@@ -181,7 +181,22 @@
     if (rType) {
       rType.textContent = isImg ? "Photo" : "Video";
     }
+    
+    var isImagePost = j.type === "image" || (j.filename && j.filename.endsWith(".jpg"));
+    if (dlBtn) {
+      var span = dlBtn.querySelector("span");
+      var text = isImagePost ? "Download Photo (JPG)" : "Download MP4";
+      if (span) span.textContent = text;
+      else dlBtn.textContent = text;
+    }
+    if (rType) {
+      rType.textContent = isImagePost ? "Photo" : "Video";
+    }
     preview.src = j.stream;
+    if (isImagePost) {
+      preview.setAttribute("poster", j.stream);
+    }
+
 
     result.hidden = false; progress.hidden = true; success.hidden = true; shareBtn.hidden = true;
     dlBtn.disabled = false; cancelBtn.hidden = true;

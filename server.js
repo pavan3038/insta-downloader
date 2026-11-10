@@ -288,10 +288,15 @@ async function handleResolve(req, res) {
   if (!found) throw lastErr;
   await assertPublicUrl(found.videoUrl);
 
-  const filename = `insta-${parsed.shortcode}.mp4`;
+  
+    const isImage = (found.videoUrl && (/\.(jpg|jpeg|png|webp)/i.test(found.videoUrl) || !found.videoUrl.includes(".mp4"))) && (!found.videoUrl.includes("video"));
+    const ext = isImage ? ".jpg" : ".mp4";
+    const mediaType = isImage ? "image" : "video";
+    const filename = `insta-${parsed.shortcode}${ext}`;
+
   const id = putEntry({ videoUrl: found.videoUrl, thumbUrl: found.thumbUrl, filename });
   sendJson(res, 200, {
-    id, source, type: parsed.type, shortcode: parsed.shortcode, title: found.title, filename,
+    id, source, type: mediaType, shortcode: parsed.shortcode, title: found.title, filename,
     thumbnail: found.thumbUrl ? `/api/thumb/${id}` : null,
     stream: `/api/stream/${id}`,
     download: `/api/download/${id}`,
