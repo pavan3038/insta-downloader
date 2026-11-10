@@ -163,6 +163,40 @@
   });
 
   function showResult(j, p) {
+    var isImg = j.type === "image" || (j.filename && !j.filename.endsWith(".mp4"));
+    
+    // Fix preview container: video vs image
+    var prevContainer = preview.parentElement;
+    var imgPrev = document.getElementById("img-preview");
+    if (!imgPrev && prevContainer) {
+      imgPrev = document.createElement("img");
+      imgPrev.id = "img-preview";
+      imgPrev.style.width = "100%";
+      imgPrev.style.borderRadius = "12px";
+      imgPrev.style.display = "none";
+      prevContainer.appendChild(imgPrev);
+    }
+
+    if (isImg) {
+      preview.style.display = "none";
+      if (imgPrev) {
+        imgPrev.src = j.thumbnail || j.stream;
+        imgPrev.style.display = "block";
+      }
+    } else {
+      if (imgPrev) imgPrev.style.display = "none";
+      preview.style.display = "block";
+      preview.src = j.stream;
+    }
+
+    // Force button labels
+    if (dlBtn) {
+      var s = dlBtn.querySelector("span");
+      var txt = isImg ? "Download Photo (JPG)" : "Download MP4";
+      if (s) { s.textContent = txt; s.removeAttribute("data-i18n"); }
+      else dlBtn.textContent = txt;
+    }
+
     current = { id: j.id, url: p.canonical, shortcode: p.shortcode, type: j.type || p.type, title: j.title || '',
                 download: j.download, filename: j.filename || ('insta-' + p.shortcode + '.mp4') };
     rTitle.textContent = current.title || t('result.untitled');
