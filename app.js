@@ -162,10 +162,12 @@
       .catch(function () { setBusy(false); lastErr = { code: 'NETWORK', key: 'err.network' }; renderError(); });
   });
 
-  function showResult(j, p) {
+  
+function showResult(j, p) {
+    cur = j;
     var vEl = document.getElementById("preview");
     var iEl = document.getElementById("img-preview");
-    var isPhoto = (j.type === "image") || (j.filename && j.filename.toLowerCase().includes(".jpg"));
+    var isPhoto = (j.type === "image") || (j.filename && (j.filename.endsWith(".jpg") || j.filename.endsWith(".png")));
 
     if (isPhoto) {
       if (vEl) { vEl.style.display = "none"; vEl.pause(); }
@@ -177,89 +179,25 @@
       }
       var metaItem = document.querySelector(".meta li:nth-child(2)");
       if (metaItem) metaItem.textContent = "JPG";
+      if (rType) rType.textContent = "Photo";
     } else {
       if (iEl) iEl.style.display = "none";
       if (vEl) { vEl.style.display = "block"; vEl.src = j.stream; }
       if (dlBtn) {
         var sp2 = dlBtn.querySelector("span");
-        if (sp2) sp2.textContent = "Download MP4";
+        if (sp2) { sp2.setAttribute("data-i18n", "btn.download"); sp2.textContent = "Download MP4"; }
       }
+      var metaItem2 = document.querySelector(".meta li:nth-child(2)");
+      if (metaItem2) metaItem2.textContent = "MP4";
+      if (rType) rType.textContent = "Video";
     }
 
-    var isImg = j.type === "image" || (j.filename && !j.filename.endsWith(".mp4"));
-    
-    // Fix preview container: video vs image
-    var prevContainer = preview.parentElement;
-    var imgPrev = document.getElementById("img-preview");
-    if (!imgPrev && prevContainer) {
-      imgPrev = document.createElement("img");
-      imgPrev.id = "img-preview";
-      imgPrev.style.width = "100%";
-      imgPrev.style.borderRadius = "12px";
-      imgPrev.style.display = "none";
-      prevContainer.appendChild(imgPrev);
-    }
+    if (rTitle) rTitle.textContent = j.title || "Instagram media";
+    if (resultCard) resultCard.hidden = false;
 
-    if (isImg) {
-      preview.style.display = "none";
-      if (imgPrev) {
-        imgPrev.src = j.thumbnail || j.stream;
-        imgPrev.style.display = "block";
-      }
-    } else {
-      if (imgPrev) imgPrev.style.display = "none";
-      preview.style.display = "block";
-      preview.src = j.stream;
-    }
+}
 
-    // Force button labels
-    if (dlBtn) {
-      var s = dlBtn.querySelector("span");
-      var txt = isImg ? "Download Photo (JPG)" : "Download MP4";
-      if (s) { s.textContent = txt; s.removeAttribute("data-i18n"); }
-      else dlBtn.textContent = txt;
-    }
-
-    current = { id: j.id, url: p.canonical, shortcode: p.shortcode, type: j.type || p.type, title: j.title || '',
-                download: j.download, filename: j.filename || ('insta-' + p.shortcode + '.mp4') };
-    rTitle.textContent = current.title || t('result.untitled');
-    rType.textContent = t('type.' + current.type);
-    if (j.thumbnail) preview.setAttribute('poster', j.thumbnail);
-    
-    var isImg = (j.filename && !j.filename.endsWith(".mp4")) || (j.type === "image") || (j.stream && (j.stream.includes(".jpg") || j.stream.includes(".webp") || j.stream.includes(".png")));
-    if (dlBtn) {
-      var span = dlBtn.querySelector("span");
-      if (span) {
-        span.textContent = isImg ? "Download Photo (JPG)" : "Download MP4";
-      } else {
-        dlBtn.textContent = isImg ? "Download Photo (JPG)" : "Download MP4";
-      }
-    }
-    if (rType) {
-      rType.textContent = isImg ? "Photo" : "Video";
-    }
-    
-    var isImagePost = j.type === "image" || (j.filename && j.filename.endsWith(".jpg"));
-    if (dlBtn) {
-      var span = dlBtn.querySelector("span");
-      var text = isImagePost ? "Download Photo (JPG)" : "Download MP4";
-      if (span) span.textContent = text;
-      else dlBtn.textContent = text;
-    }
-    if (rType) {
-      rType.textContent = isImagePost ? "Photo" : "Video";
-    }
-    preview.src = j.stream;
-    if (isImagePost) {
-      preview.setAttribute("poster", j.stream);
-    }
-
-
-    result.hidden = false; progress.hidden = true; success.hidden = true; shareBtn.hidden = true;
-    dlBtn.disabled = false; cancelBtn.hidden = true;
-    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-  IG.onLang(function () {
+function () {
     if (current) { rType.textContent = t('type.' + current.type); if (!current.title) rTitle.textContent = t('result.untitled'); }
     renderError(); renderHist(); syncPasteLabel();
     if (!success.hidden) successText.textContent = successMsg();
