@@ -167,7 +167,7 @@ const graphProvider = {
         let video = m.media_type === 'VIDEO' ? m : null;
         if (m.media_type === 'CAROUSEL_ALBUM') {
           const kids = await jsonFetch(`${base}/${encodeURIComponent(m.id)}/children?fields=id,media_type,media_url,thumbnail_url&access_token=${encodeURIComponent(token)}`);
-          video = (kids.data || []).find((k) => k.media_type === 'VIDEO') || null;
+          video = (kids.data || []).find((k) => k.media_type === 'VIDEO') || (kids.data || [])[0] || null;
         }
         if (!video || !video.media_url) throw new ApiError(404, 'NOT_FOUND', 'This post has no video');
         return {
@@ -195,8 +195,8 @@ const customProvider = {
     } catch { throw new ApiError(500, 'CONFIG', 'CUSTOM_API_HEADERS is not valid JSON'); }
     if (c.method !== 'GET' && c.body) { init.body = fill(c.body, false); init.headers['Content-Type'] = init.headers['Content-Type'] || 'application/json'; }
     const data = await jsonFetch(fill(c.url, true), init);
-    const videoUrl = pick(data, c.video);
-    if (!/^https?:\/\//i.test(videoUrl)) throw new ApiError(404, 'NOT_FOUND', 'API did not return a video URL');
+    let videoUrl = pick(data, c.video) || (c.thumb ? pick(data, c.thumb) : null) || pick(data, "media") || pick(data, "url") || pick(data, "download_url") || pick(data, "display_url");
+    if (!/^https?:\/\//i.test(videoUrl)) throw new ApiError(404, 'NOT_FOUND', 'API did not return a downloadable media URL');
     return { videoUrl, thumbUrl: pick(data, c.thumb), title: shortTitle(pick(data, c.title)) };
   },
 };
